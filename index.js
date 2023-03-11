@@ -17,6 +17,64 @@ input_box.placeholder="0";
 input_box.setAttribute("id", "output");
 con.appendChild(input_box);
 
+var memory=0;
+// MR button
+var mr = document.createElement('button');
+mr.innerHTML = "mr";
+con.appendChild(mr);
+mr.addEventListener('click', function() {
+  memory = localStorage.getItem('memory');
+  if (memory) {
+    outputscreen.value = memory;
+  }
+});
+
+// MC button
+var mc = document.createElement('button');
+mc.innerHTML = "mc";
+con.appendChild(mc);
+mc.addEventListener('click', function() {
+  localStorage.removeItem('memory');
+  localStorage.setItem('memory',0);
+  outputscreen.value=0
+//   display(outputscreen.value);
+});
+
+// M- button
+var mm = document.createElement('button');
+mm.innerHTML = "m-";
+con.appendChild(mm);
+mm.addEventListener('click', function() {
+  var memory = localStorage.getItem('memory');
+  var currentVal = outputscreen.value;
+  if (memory) {
+    var newVal = eval(currentVal+'-' +memory  );
+    localStorage.setItem('memory', newVal);
+    outputscreen.value=newVal; // updated this line
+  } else {
+    localStorage.setItem('memory', currentVal);
+    outputscreen.value=currentVal; // updated this line
+  }
+});
+
+// M+ button
+var mp = document.createElement('button');
+mp.innerHTML = "m+";
+con.appendChild(mp);
+mp.addEventListener('click', function() {
+  var memory = localStorage.getItem('memory');
+  var currentVal = outputscreen.value;
+  if (memory) {
+    var newVal = eval(memory + '+' + currentVal);
+    localStorage.setItem('memory', newVal);
+    outputscreen.value=newVal; // updated this line
+  } else {
+    localStorage.setItem('memory', currentVal);
+    outputscreen.value=currentVal; // updated this line
+  }
+});
+
+
 //AC button
 var ac=document.createElement('button');
 ac.innerHTML="ac";
@@ -93,6 +151,10 @@ con.appendChild(calc);
 //adding event lister
 ac.addEventListener("click",Ac);
 del.addEventListener("click",Del);
+// mr.addEventListener("click",Ac);
+// mc.addEventListener("click",Del);
+// ma.addEventListener("click",Ac);
+// ms.addEventListener("click",Del);
 mod.addEventListener("click",()=>{
     display('%');
 })
@@ -113,6 +175,7 @@ function display(num){
 function calculate(){
     try{
         outputscreen.value = eval(outputscreen.value);
+        localStorage.setItem("memory",eval(outputscreen.value));
     }
     catch(err){
         alert("invalid");
