@@ -161,7 +161,14 @@ mod.addEventListener("click",()=>{
 divide.addEventListener('click',()=>{
     display('/');
 });
+
 calc.addEventListener("click",calculate);
+document.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      calculate();
+    }
+});
+
 
 //function definitions
 let outputscreen = document.getElementById("output");
